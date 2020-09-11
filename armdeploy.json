@@ -142,7 +142,7 @@
         },
         {
             "type": "Microsoft.Web/sites/networkConfig",
-            "apiVersion": "2019-08-01",
+            "apiVersion": "2018-11-01",
             "name": "[concat(parameters('sitename'), '/VirtualNetwork')]",
             "location": "[parameters('location')]",
             "dependsOn": [
