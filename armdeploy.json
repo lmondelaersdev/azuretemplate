@@ -46,9 +46,8 @@
         "appGwIpConfigName": "appGatewayIpConfigName",
         "appGwFrontendPortName": "appGatewayFrontendPort_80",
         "appGwFrontendPort": 80,
-        "appGwFrontendPortId": "[resourceId('Microsoft.Network/applicationGateways/frontendPorts/', variables('applicationGatewayName'), variables('appGwFrontendPortName'))]",
-        "appGwFrontendIpConfigName": "appGatewayPublicFrontendIpConfig",
-        "appGwFrontendIpConfigId": "[resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations/', variables('applicationGatewayName'), variables('appGwFrontendIpConfigName'))]",
+      
+       
         "appGwHttpSettingName": "appGatewayHttpSetting_80",
         "appGwHttpSettingId": "[resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection/', variables('applicationGatewayName'), variables('appGwHttpSettingName'))]",
         "appGwHttpSettingProbeName": "appGatewayHttpSettingProbe_80",
@@ -182,20 +181,6 @@
                             "cookieBasedAffinity": "Disabled",
                             "requestTimeout": 20,
                             "pickHostNameFromBackendAddress": true
-                        }
-                    }
-                ],
-                "httpListeners": [
-                    {
-                        "name": "[variables('appGwListenerName')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[variables('appGwFrontendIpConfigId')]"
-                            },
-                            "frontendPort": {
-                                "id": "[variables('appGwFrontendPortId')]"
-                            },
-                            "protocol": "Http"
                         }
                     }
                 ],
