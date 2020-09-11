@@ -7,6 +7,9 @@
         },
         "sitename": {
             "value": "da-portal-pocarm"
+        },
+        "webapiname": {
+            "value": "da-webapi-pocarm" 
         }
     }
 }

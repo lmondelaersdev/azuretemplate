@@ -50,6 +50,12 @@
                 "description": "description"
             }
         },
+        "webapiname": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -125,6 +131,23 @@
         },
         {
             "name": "[parameters('sitename')]",
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/appServicePlan1')]": "Resource",
+                "displayName": "[parameters('sitename')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', 'appServicePlan1')]"
+            ],
+            "properties": {
+                "name": "[parameters('sitename')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'appServicePlan1')]"
+            }
+        },
+         {
+            "name": "[parameters('webapiname')]",
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
             "location": "[resourceGroup().location]",
