@@ -2,6 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "storageAccountName": {
+            "type": "string",
+            "defaultValue": "sa-delo003-poc",
+            "metadata": {
+                "description": "description"
+            }
+        },
         "portalName": {
             "type": "string",
             "defaultValue": "[uniqueString(resourceGroup().id)]",
@@ -29,6 +36,20 @@
             "metadata": {
                 "description": "The location in which all resources should be deployed."
             }
+        },
+        "sqlAdministratorLogin": {
+            "type": "string",
+            "defaultValue": "deloadmin",
+            "metadata": {
+                "description": "The admin user of the SQL Server"
+            }
+        },
+        "sqlAdministratorLoginPassword": {
+            "type": "securestring",
+            "defaultValue": "Terafru5",
+            "metadata": {
+                "description": "The password of the admin user of the SQL Server"
+            }
         }
     },
     "variables": {
@@ -38,7 +59,11 @@
         "subnetNameData": "mydataservice",
         "subnetAppsAddressPrefix": "10.0.0.0/24",
         "subnetDataAddressPrefix": "10.0.1.0/24",
-        "appServicePlanSku": "S1"
+        "appInsightsNamePortal": "[concat(parameters('portalName'), '-app-insights')]",
+        "appInsightsNameApi": "[concat(parameters('apiName'), '-app-insights')]",
+        "appServicePlanSku": "S1",
+        "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]",
+        "databaseName": "sampledb"
     },
     "resources": [
         {
@@ -83,6 +108,110 @@
                     }
                 ]
             }
+        },
+        {
+            "apiVersion": "2020-02-02-preview",
+            "type": "microsoft.insights/components",
+            "name": "[variables('appInsightsNamePortal')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ApplicationId": "[variables('appInsightsNamePortal')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
+            "apiVersion": "2020-02-02-preview",
+            "type": "microsoft.insights/components",
+            "name": "[variables('appInsightsNameApi')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ApplicationId": "[variables('appInsightsNameApi')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
+            "apiVersion": "2019-06-01",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[parameters('storageAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_RAGRS"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "supportsHttpsTrafficOnly": true,
+                "accessTier": "Hot",
+                "encryption": {
+                    "services": {
+                        "blob": {
+                            "enabled": true
+                        },
+                        "file": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                }
+            }
+        },
+        {
+
+            "name": "[variables('sqlserverName')]",
+            "type": "Microsoft.Sql/servers",
+            "location": "[parameters('location')]",
+            "tags": {
+                "displayName": "SqlServer"
+            },
+            "apiVersion": "2018-06-01-preview",
+            "properties": {
+                "administratorLogin": "[parameters('sqlAdministratorLogin')]",
+                "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+                "version": "12.0"
+            },
+            "resources": [
+                {
+                    "name": "[variables('databaseName')]",
+                    "type": "databases",
+                    "location": "[parameters('location')]",
+                    "tags": {
+                        "displayName": "Database"
+                    },
+                    "apiVersion": "2018-06-01-preview",
+                    "dependsOn": [
+                        "[variables('sqlserverName')]"
+                    ],
+                    "properties": {
+                        "edition": "Basic",
+                        "collation": "SQL_Latin1_General_CP1_CI_AS",
+                        "maxSizeBytes": "1073741824",
+                        "requestedServiceObjectiveName": "Basic"
+                    }
+                },
+                {
+                    "type": "firewallrules",
+                    "apiVersion": "2018-06-01-preview",
+                    "dependsOn": [
+                        "[variables('sqlserverName')]"
+                    ],
+                    "location": "[parameters('location')]",
+                    "name": "AllowAllWindowsAzureIps",
+                    "properties": {
+                        "endIpAddress": "0.0.0.0",
+                        "startIpAddress": "0.0.0.0"
+                    }
+                },
+                {
+                    "apiVersion": "2020-02-02-preview",
+                    "type": "virtualNetworkRules",
+                    "name": "[concat('allow-access-from-', variables('subnetNameApps'))]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+                    ],
+                    "properties": {
+                        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]"
+                    }
+                }
+            ]
         },
         {
             "type": "Microsoft.Web/serverfarms",
