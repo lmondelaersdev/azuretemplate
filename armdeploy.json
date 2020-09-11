@@ -31,10 +31,6 @@
         "virtualNetworkSubnetPrefix": "10.0.0.0/24",
         "virtualNetworkId": "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
         "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('virtualNetworkName'), variables('virtualNetworkSubnetName'))]",
-        "publicIpAddressName": "[concat('myAppGatewayPublicIp', '-', uniqueString(resourceGroup().id))]",
-        "publicIpAddressSku": "Standard",
-        "publicIpAddressAllocationType": "Static",
-        "publicIpAddressId": "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIpAddressName'))]",
         "webAppName": "[concat(parameters('webAppName'), '-', uniqueString(resourceGroup().id))]",
         "webAppPlanName": "[concat(parameters('webAppName'), 'Plan', '-', uniqueString(resourceGroup().id))]",
         "webAppPlanSku": "S1",
@@ -132,27 +128,11 @@
             }
         },
         {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2019-02-01",
-            "name": "[variables('publicIpAddressName')]",
-            "location": "[variables('location')]",
-            "sku": {
-                "name": "[variables('publicIpAddressSku')]"
-            },
-            "properties": {
-                "publicIPAllocationMethod": "[variables('publicIpAddressAllocationType')]",
-                "dnsSettings": {
-                    "domainNameLabel": "[toLower(variables('webAppName'))]"
-                }
-            }
-        },
-        {
             "type": "Microsoft.Network/applicationGateways",
             "apiVersion": "2019-02-01",
             "name": "[variables('applicationGatewayName')]",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[variables('publicIpAddressId')]",
                 "[variables('virtualNetworkId')]"
             ],
             "properties": {
@@ -166,16 +146,6 @@
                         "properties": {
                             "subnet": {
                                 "id": "[variables('virtualNetworkSubnetId')]"
-                            }
-                        }
-                    }
-                ],
-                "frontendIPConfigurations": [
-                    {
-                        "name": "[variables('appGwFrontendIpConfigName')]",
-                        "properties": {
-                            "PublicIPAddress": {
-                                "id": "[variables('publicIpAddressId')]"
                             }
                         }
                     }
@@ -271,10 +241,6 @@
         }
     ],
     "outputs": {
-        "appGatewayUrl": {
-            "type": "string",
-            "value": "[concat('http://', reference(variables('publicIpAddressName')).dnsSettings.fqdn, '/')]"
-        },
         "webAppUrl": {
             "type": "string",
             "value": "[concat('http://', reference(variables('webAppName')).hostNames[0], '/')]"
