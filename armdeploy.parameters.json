@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vnetName": {
-            "value": "TestVNET2" 
+            "value": "TestVNET2"
         },
         "sitename": {
-            "value": "TestSite" 
+            "value": "TestSite"
         }
     }
 }
