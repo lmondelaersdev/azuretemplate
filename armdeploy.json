@@ -130,13 +130,13 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/appServicePlan1')]": "Resource",
-                "displayName": "webApp1"
+                "displayName": "[parameters('sitename')]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', 'appServicePlan1')]"
             ],
             "properties": {
-                "name": "webApp1",
+                "name": "[parameters('sitename')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'appServicePlan1')]"
             }
         },
