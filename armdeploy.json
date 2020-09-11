@@ -4,7 +4,7 @@
     "parameters": {
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "sa-delo003-poc",
+            "defaultValue": "sadelo003poc1",
             "metadata": {
                 "description": "description"
             }
