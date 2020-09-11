@@ -2,7 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "appName": {
+        "portalName": {
+            "type": "string",
+            "defaultValue": "[uniqueString(resourceGroup().id)]",
+            "metadata": {
+                "description": "The name of the app to create."
+            }
+        },
+        "apiName": {
             "type": "string",
             "defaultValue": "[uniqueString(resourceGroup().id)]",
             "metadata": {
@@ -27,8 +34,10 @@
     "variables": {
         "vnetName": "vnet",
         "vnetAddressPrefix": "10.0.0.0/16",
-        "subnetName": "myappservice",
-        "subnetAddressPrefix": "10.0.0.0/24",
+        "subnetNameApps": "myappservice",
+        "subnetNameData": "mydataservice",
+        "subnetAppsAddressPrefix": "10.0.0.0/24",
+        "subnetDataAddressPrefix": "10.0.0.0/24",
         "appServicePlanSku": "S1"
     },
     "resources": [
@@ -45,12 +54,26 @@
                 },
                 "subnets": [
                     {
-                        "name": "[variables('subnetName')]",
+                        "name": "[variables('subnetNameApps')]",
                         "properties": {
-                            "addressPrefix": "[variables('subnetAddressPrefix')]",
+                            "addressPrefix": "[variables('subnetAppsAddressPrefix')]",
                             "delegations": [
                                 {
-                                    "name": "delegation",
+                                    "name": "AppsSubnet",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Web/serverFarms"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "[variables('subnetNameData')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetDataAddressPrefix')]",
+                            "delegations": [
+                                {
+                                    "name": "DataSubnet",
                                     "properties": {
                                         "serviceName": "Microsoft.Web/serverFarms"
                                     }
@@ -74,7 +97,35 @@
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2019-08-01",
-            "name": "[parameters('appName')]",
+            "name": "[parameters('portalName')]",
+            "location": "[parameters('location')]",
+            "kind": "app",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
+            },
+            "resources": [
+                {
+                    "name": "virtualNetwork",
+                    "type": "networkConfig",
+                    "apiVersion": "2019-08-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('portalName'))]"
+                    ],
+                    "properties": {
+                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
+                        "swiftSupported": true
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2019-08-01",
+            "name": "[parameters('apiName')]",
             "location": "[parameters('location')]",
             "kind": "app",
             "dependsOn": [
@@ -83,6 +134,20 @@
             ],
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
+                "siteConfig": {
+                    "http20Enabled": "true",
+                    "minTlsVersion": "1.2",
+                    "ipSecurityRestrictions": [
+                        {
+                            "vnetSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
+                            "action": "Allow",
+                            "tag": "Default",
+                            "priority": 200,
+                            "name": "appSubnet",
+                            "description": "Isolate traffic to subnet containing app services"
+                        }
+                    ]
+                },
                 "httpsOnly": true
             },
             "resources": [
@@ -91,14 +156,14 @@
                     "type": "networkConfig",
                     "apiVersion": "2019-08-01",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites', parameters('appName'))]"
+                        "[resourceId('Microsoft.Web/sites', parameters('apiName'))]"
                     ],
                     "properties": {
-                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName'))]",
-                        "swiftSupported": true                    
+                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
+                        "swiftSupported": true
                     }
                 }
-            ] 
+            ]
         }
     ]
 }
