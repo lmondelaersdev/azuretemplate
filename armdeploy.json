@@ -169,6 +169,18 @@
             "properties": {
                 "supportsHttpsTrafficOnly": true,
                 "accessTier": "Hot",
+                 "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
+                            "action": "Allow",
+                            "state": "Succeeded"
+                        }
+                    ],
+                    "ipRules": [],
+                    "defaultAction": "Deny"
+                },
                 "encryption": {
                     "services": {
                         "blob": {
