@@ -232,7 +232,8 @@
                     "type": "virtualNetworkRules",
                     "name": "[concat('allow-access-from-', variables('subnetNameApps'))]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+                        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
+                         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
                     ],
                     "properties": {
                         "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]"
