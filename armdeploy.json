@@ -240,7 +240,7 @@
                     }
                 }
             ]
-        },
+        }, 
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2019-08-01",
