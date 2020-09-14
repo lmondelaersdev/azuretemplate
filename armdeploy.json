@@ -335,7 +335,10 @@
         "appInsightsNameApi": "[concat(parameters('apiName'), '-app-insights')]",
         "appServicePlanSku": "S1",
         "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]",
-        "databaseName": "sampledb"
+        "databaseName": "sampledb",
+        "storageAccountApiVersion": "2018-07-01",  
+        "storageAccountNameTidy": "[toLower(trim(parameters('storageAccountName')))]",   
+        "blobEndPoint":"[concat('https://',variables('storageAccountNameTidy'),'.blob.core.windows.net/')]"  
     },
     "resources": [
         {
@@ -481,7 +484,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('AdminConsultUser')]" }
+            "properties": { "value": "[parameters('AdminConsultUser')]" } 
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -504,8 +507,8 @@
             "name": "[concat(parameters('keyVaultName'), '/AzureStorageConnectionString')]",
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('AzureStorageConnectionString')]" }
+            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]", "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]" ],
+            "properties": { "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountNameTidy'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountNameTidy')), variables('storageAccountApiVersion')).keys[0].value)]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
