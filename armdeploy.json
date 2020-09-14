@@ -86,7 +86,34 @@
                                 {
                                     "name": "AppsSubnet",
                                     "properties": {
-                                        "serviceName": "Microsoft.Web/serverFarms"
+                                        "serviceName": "Microsoft.Web/serverFarms",
+                                        "serviceEndpoints": [                                            
+                                            {
+                                                "service": "Microsoft.KeyVault",
+                                                "locations": [
+                                                    "*"
+                                                ]
+                                            },
+                                            {
+                                                "service": "Microsoft.ServiceBus",
+                                                "locations": [
+                                                    "*"
+                                                ]
+                                            },
+                                            {
+                                                "service": "Microsoft.Sql",
+                                                "locations": [
+                                                    "westeurope"
+                                                ]
+                                            },
+                                            {
+                                                "service": "Microsoft.Storage",
+                                                "locations": [
+                                                    "westeurope",
+                                                    "northeurope"
+                                                ]
+                                            }
+                                        ]
                                     }
                                 }
                             ]
