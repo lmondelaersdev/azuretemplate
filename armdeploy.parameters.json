@@ -1,6 +1,153 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": { 
+    "parameters": {
+        "keyVaultName": {
+            "value": "GEN-UNIQUE"
+        },
+        "objectId": {
+            "value": "GEN-AZUREAD-OBJECTID"
+        },
+        "AdminConsultPassword": {
+            "value": "tbd"
+        },
+        "AdminConsultUser": {
+            "value": "tbd"
+        },
+        "AuthenticationApiKeyWebAPI": {
+            "value": "tbd"
+        },
+        "AzureSearchApiKey": {
+            "value": "tbd"
+        },
+        "AzureStorageConnectionString": {
+            "value": "tbd"
+        },
+        "CentralAdminContext": {
+            "value": "tbd"
+        },
+        "CentralAdminContextSwift": {
+            "value": "tbd"
+        },
+        "CentralAdminMasterDataFunctionKey": {
+            "value": "tbd"
+        },
+        "CertificateThumbprintWebApi": {
+            "value": "tbd"
+        },
+        "CostAllocationApiAuthClientSecret": {
+            "value": "tbd"
+        },
+        "CostAllocationApiClientSecret": {
+            "value": "tbd"
+        },
+        "DADatabasePassword": {
+            "value": "tbd"
+        },
+        "DAStorageAccountKey": {
+            "value": "tbd"
+        },
+        "DASysInterfacesPassword": {
+            "value": "tbd"
+        },
+        "DataLakeSPKey": {
+            "value": "tbd"
+        },
+        "EDreamsToken": {
+            "value": "tbd"
+        },
+        "EOLClientSecret": {
+            "value": "tbd"
+        },
+        "ERPServiceBusConnectionString": {
+            "value": "tbd"
+        },
+        "ExactOnlineClientSecret": {
+            "value": "tbd"
+        },
+        "ExactOnlineServiceBusConnectionString": {
+            "value": "tbd"
+        },
+        "IDAClientSecretPortal": {
+            "value": "tbd"
+        },
+        "IDAClientSecretWeb": {
+            "value": "tbd"
+        },
+        "IDAClientSecretWebApi": {
+            "value": "tbd"
+        },
+        "InstrumentationKeyEmailSummary": {
+            "value": "tbd"
+        },
+        "InstrumentationKeyERPWebJobs": {
+            "value": "tbd"
+        },
+        "InstrumentationKeyExactOnlineWebJobs": {
+            "value": "tbd"
+        },
+        "InstrumentationKeyLyantheWebJobs": {
+            "value": "tbd"
+        },
+        "InstrumentationKeyPortal": {
+            "value": "tbd"
+        },
+        "InstrumentationKeySilverfinWebJobs": {
+            "value": "tbd"
+        },
+        "InstrumentationKeyWeb": {
+            "value": "tbd"
+        },
+        "InstrumentationKeyWebAPI": {
+            "value": "tbd"
+        },
+        "LyanthePassword": {
+            "value": "tbd"
+        },
+        "LyantheSOAPPassword": {
+            "value": "tbd"
+        },
+        "RedisCacheConnectionString": {
+            "value": "tbd"
+        },
+        "RelayKey": {
+            "value": "tbd"
+        },
+        "SendGridAPIKey": {
+            "value": "tbd"
+        },
+        "ServiceBusConnectionString": {
+            "value": "tbd"
+        },
+        "ServiceBusConnectionStringERP": {
+            "value": "tbd"
+        },
+        "ServiceBusConnectionStringExactOnline": {
+            "value": "tbd"
+        },
+        "ServiceBusConnectionStringLyanthe": {
+            "value": "tbd"
+        },
+        "ServiceBusConnectionStringSilverfin": {
+            "value": "tbd"
+        },
+        "SilverfinApiKey": {
+            "value": "tbd"
+        },
+        "SilverfinClientSecret": {
+            "value": "tbd"
+        },
+        "SilverfinServiceBusConnectionString": {
+            "value": "tbd"
+        },
+        "SmtpPass": {
+            "value": "tbd"
+        },
+        "TaxAntivirusClientSecret": {
+            "value": "tbd"
+        },
+        "AdminConsultDBPassword": {
+            "value": "tbd" 
+        }
     }
 }
