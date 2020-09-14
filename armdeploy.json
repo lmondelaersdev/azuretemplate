@@ -82,12 +82,7 @@
                         "name": "[variables('subnetNameApps')]",
                         "properties": {
                             "addressPrefix": "[variables('subnetAppsAddressPrefix')]",
-                            "delegations": [
-                                {
-                                    "name": "AppsSubnet",
-                                    "properties": {
-                                        "serviceName": "Microsoft.Web/serverFarms",
-                                        "serviceEndpoints": [                                            
+                             "serviceEndpoints": [                                            
                                             {
                                                 "service": "Microsoft.KeyVault",
                                                 "locations": [
@@ -113,7 +108,13 @@
                                                     "northeurope"
                                                 ]
                                             }
-                                        ]
+                                        ],
+                            "delegations": [
+                                {
+                                    "name": "AppsSubnet",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Web/serverFarms"
+                                       
                                     }
                                 }
                             ]
