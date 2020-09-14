@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "keyVaultName": {
-            "value": "GEN-UNIQUE"
+            "value": "dakeyvault-poc"
         },
         "objectId": {
-            "value": "GEN-AZUREAD-OBJECTID"
+            "value": "6c3efe43-eb39-4fd3-9fc7-c4cef8d3a7b3"
         },
         "AdminConsultPassword": {
             "value": "tbd"
