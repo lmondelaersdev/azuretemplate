@@ -322,7 +322,7 @@
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         }
 
-
+ 
 
     },
     "variables": {
@@ -335,7 +335,7 @@
         "appInsightsNamePortal": "[concat(parameters('portalName'), '-app-insights')]",
         "appInsightsNameApi": "[concat(parameters('apiName'), '-app-insights')]",
         "appServicePlanSku": "S1",
-        "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]",
+        "sqlserverName": "delo003-digitalaccountant-poc",
         "databaseName": "centraladmin-poc",
         "DatabaseConnectionString": "[concat('Server=tcp:',variables('sqlserverName'),'.database.windows.net,,1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
         "storageAccountApiVersion": "2018-07-01",
