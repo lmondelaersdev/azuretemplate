@@ -338,7 +338,7 @@
         "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]",
         "databaseName": "centraladmin-poc",
         "DatabaseConnectionString": "[concat('Server=tcp:',variables('sqlserverName'),'.database.windows.net,,1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
-        "storageAccountApiVersion": "2018-07-01",  
+        "storageAccountApiVersion": "2018-07-01",
         "storageAccountNameTidy": "[toLower(trim(parameters('storageAccountName')))]"
     },
     "resources": [
@@ -485,7 +485,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('AdminConsultUser')]" } 
+            "properties": { "value": "[parameters('AdminConsultUser')]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -905,8 +905,12 @@
                     "dependsOn": [
                         "[variables('sqlserverName')]"
                     ],
+                    "sku": {
+                        "name": "Standard",
+                        "tier": "Standard",
+                        "capacity": 20
+                    },
                     "properties": {
-                        "edition": "Basic",
                         "collation": "SQL_Latin1_General_CP1_CI_AS",
                         "maxSizeBytes": "1073741824",
                         "requestedServiceObjectiveName": "Basic"
