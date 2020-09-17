@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "keyVaultName": {
-            "value": "dakeyvault-poc"
+            "value": "dakeyvault-poc123"
         },
         "objectId": {
             "value": "6c9a9994-0b10-46cd-a415-cdaa804319c4"
