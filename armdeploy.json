@@ -11,7 +11,7 @@
         },
         "portalName": {
             "type": "string",
-            "defaultValue": "[uniqueString(resourceGroup().id)]",
+            "defaultValue": "da-portal-poc",
             "metadata": {
                 "description": "The name of the app to create."
             }
@@ -336,10 +336,10 @@
         "appInsightsNameApi": "[concat(parameters('apiName'), '-app-insights')]",
         "appServicePlanSku": "S1",
         "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]",
-        "databaseName": "sampledb",
+        "databaseName": "centraladmin-poc",
+        "DatabaseConnectionString": "[concat('Server=tcp:',variables('sqlserverName'),'.database.windows.net,,1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
         "storageAccountApiVersion": "2018-07-01",  
-        "storageAccountNameTidy": "[toLower(trim(parameters('storageAccountName')))]",   
-        "blobEndPoint":"[concat('https://',variables('storageAccountNameTidy'),'.blob.core.windows.net/')]"  
+        "storageAccountNameTidy": "[toLower(trim(parameters('storageAccountName')))]"
     },
     "resources": [
         {
@@ -509,7 +509,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]", "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]" ],
-            "properties": { "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountNameTidy'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountNameTidy')), variables('storageAccountApiVersion')).keys[0].value,'EndpointSuffix=core.windows.net')]" }
+            "properties": { "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountNameTidy'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountNameTidy')), variables('storageAccountApiVersion')).keys[0].value,';EndpointSuffix=core.windows.net')]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -517,7 +517,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('CentralAdminContext')]" }
+            "properties": { "value": "[variables('DatabaseConnectionString')]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
