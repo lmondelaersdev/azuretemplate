@@ -874,6 +874,9 @@
                 "accessTier": "Hot",
                 "networkAcls": {
                     "bypass": "AzureServices",
+                     "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                    ],
                     "virtualNetworkRules": [
                         {
                             "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
