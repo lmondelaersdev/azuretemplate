@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storageAccountName": {
@@ -28,6 +28,24 @@
             "defaultValue": "[uniqueString(subscription().subscriptionId)]",
             "metadata": {
                 "description": "The name of the app service plan to create."
+            }
+        },
+        "certificateName": {
+            "type": "string",
+            "metadata": {
+                "description": "User friendly certificate resource name"
+            }
+        },
+        "existingKeyVaultId": {
+            "type": "string",
+            "metadata": {
+                "description": "Existing Key Vault resource Id with an access policy to allow Microsoft.Web RP to read Key Vault secrets (Checkout README.md for more information)"
+            }
+        },
+        "existingKeyVaultSecretName": {
+            "type": "string",
+            "metadata": {
+                "description": "Key Vault Secret that contains a PFX certificate"
             }
         },
         "location": {
@@ -322,7 +340,7 @@
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         }
 
- 
+
 
     },
     "variables": {
@@ -952,6 +970,21 @@
                 "name": "[variables('appServicePlanSku')]"
             },
             "kind": "app"
+        },
+        {
+            "type": "Microsoft.Web/certificates",
+            "name": "[parameters('certificateName')]",
+            "apiVersion": "2019-08-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+            ],
+            "properties": {
+                "keyVaultId": "[parameters('existingKeyVaultId')]",
+                "keyVaultSecretName": "[parameters('existingKeyVaultSecretName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
+            }
         },
         {
             "type": "Microsoft.Web/sites",

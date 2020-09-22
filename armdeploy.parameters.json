@@ -8,6 +8,15 @@
         "objectId": {
             "value": "6c9a9994-0b10-46cd-a415-cdaa804319c4"
         },
+        "certificateName": {
+            "value": "da-portalwebapi-dev"
+        },
+        "existingKeyVaultId": {
+            "value": "/subscriptions/d6e33d7b-525b-4a9a-8ff8-a40393c7e061/resourceGroups/RG-DELO003-DEVOPS/providers/Microsoft.KeyVault/vaults/dakeyvault-devops"
+        },
+        "existingKeyVaultSecretName": {
+            "value": "devappcert"
+        },
         "AdminConsultPassword": {
             "value": "tbd"
         },
@@ -147,7 +156,7 @@
             "value": "tbd"
         },
         "AdminConsultDBPassword": {
-            "value": "tbd" 
+            "value": "tbd"
         }
     }
 }
