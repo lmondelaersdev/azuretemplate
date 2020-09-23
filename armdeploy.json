@@ -469,7 +469,7 @@
                 "ApplicationId": "[variables('appInsightsNameApi')]",
                 "Request_Source": "IbizaWebAppExtensionCreate"
             }
-        }, 
+        },
         {
             "type": "Microsoft.KeyVault/vaults",
             "name": "[parameters('keyVaultName')]",
@@ -1063,6 +1063,9 @@
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
             ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
             },
@@ -1091,6 +1094,9 @@
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
             ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
             },
@@ -1119,6 +1125,9 @@
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
             ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
                 "siteConfig": {
