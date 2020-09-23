@@ -17,11 +17,11 @@
         },
         "redisCacheName": {
             "type": "string",
+            "defaultValue": "da-redis-poc",
             "metadata": {
                 "description": "Specify the name of the Azure Redis Cache to create."
             }
-        },
-        ,
+        },        
         "redisCacheSKU": {
             "type": "string",
             "defaultValue": "Standard",
