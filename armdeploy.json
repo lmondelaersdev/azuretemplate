@@ -35,6 +35,13 @@
                 "description": "The name of the app to create."
             }
         },
+        "centraladminName": {
+            "type": "string",
+            "defaultValue": "da-centraladmin-poc",
+            "metadata": {
+                "description": "The name of the app to create."
+            }
+        },
         "appServicePlanName": {
             "type": "string",
             "defaultValue": "[uniqueString(subscription().subscriptionId)]",
@@ -1023,6 +1030,34 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2019-08-01",
             "name": "[parameters('portalName')]",
+            "location": "[parameters('location')]",
+            "kind": "app",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
+            },
+            "resources": [
+                {
+                    "name": "virtualNetwork",
+                    "type": "networkConfig",
+                    "apiVersion": "2019-08-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites', parameters('portalName'))]"
+                    ],
+                    "properties": {
+                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
+                        "swiftSupported": true
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2019-08-01",
+            "name": "[parameters('centraladminName')]",
             "location": "[parameters('location')]",
             "kind": "app",
             "dependsOn": [
