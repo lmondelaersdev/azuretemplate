@@ -1073,7 +1073,7 @@
                     "type": "networkConfig",
                     "apiVersion": "2019-08-01",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites', parameters('portalName'))]"
+                        "[resourceId('Microsoft.Web/sites', parameters('centraladminName'))]" 
                     ],
                     "properties": {
                         "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
