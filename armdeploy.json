@@ -469,7 +469,7 @@
                 "ApplicationId": "[variables('appInsightsNameApi')]",
                 "Request_Source": "IbizaWebAppExtensionCreate"
             }
-        },
+        }, 
         {
             "type": "Microsoft.KeyVault/vaults",
             "name": "[parameters('keyVaultName')]",
@@ -487,6 +487,27 @@
                         "permissions": {
                             "keys": "[parameters('keysPermissions')]",
                             "secrets": "[parameters('secretsPermissions')]"
+                        }
+                    },
+                    {
+                        "tenantId": "[reference(concat('Microsoft.Web/sites/',  parameters('portalName'), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').tenantId]",
+                        "objectId": "[reference(concat('Microsoft.Web/sites/',  parameters('portalName'), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]",
+                        "permissions": {
+                            "secrets": [ "get" ]
+                        }
+                    },
+                    {
+                        "tenantId": "[reference(concat('Microsoft.Web/sites/',  parameters('centraladminName'), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').tenantId]",
+                        "objectId": "[reference(concat('Microsoft.Web/sites/',  parameters('centraladminName'), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]",
+                        "permissions": {
+                            "secrets": [ "get" ]
+                        }
+                    },
+                    {
+                        "tenantId": "[reference(concat('Microsoft.Web/sites/',  parameters('apiName'), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').tenantId]",
+                        "objectId": "[reference(concat('Microsoft.Web/sites/',  parameters('apiName'), '/providers/Microsoft.ManagedIdentity/Identities/default'), '2015-08-31-PREVIEW').principalId]",
+                        "permissions": {
+                            "secrets": [ "get" ]
                         }
                     }
                 ],
@@ -933,7 +954,7 @@
                 "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
                 "version": "12.0"
             },
-            "resources": [  
+            "resources": [
                 {
                     "name": "[variables('databaseName')]",
                     "type": "databases",
@@ -947,14 +968,15 @@
                     ],
                     "sku": {
                         "name": "Standard",
-                        "tier": "Standard", 
+                        "tier": "Standard",
                         "capacity": 50
                     },
                     "properties": {
                         "collation": "SQL_Latin1_General_CP1_CI_AS",
-                        "maxSizeBytes": "21474836480", 
+                        "maxSizeBytes": "21474836480",
                         "requestedServiceObjectiveName": "Basic"
-                    },
+                    }
+                    /*  ,
                     "resources": [
                         {
                             "type": "extensions",
@@ -972,7 +994,7 @@
                                 "operationMode": "Import"
                             }
                         }
-                    ]
+                    ] */
                 },
                 {
                     "type": "firewallrules",
@@ -1073,7 +1095,7 @@
                     "type": "networkConfig",
                     "apiVersion": "2019-08-01",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites', parameters('centraladminName'))]" 
+                        "[resourceId('Microsoft.Web/sites', parameters('centraladminName'))]"
                     ],
                     "properties": {
                         "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
