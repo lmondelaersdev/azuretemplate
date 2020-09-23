@@ -15,6 +15,66 @@
                 "description": "Specifies the key of the storage account where the BACPAC file is stored."
             }
         },
+        "redisCacheName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the name of the Azure Redis Cache to create."
+            }
+        },
+        ,
+        "redisCacheSKU": {
+            "type": "string",
+            "defaultValue": "Standard",
+            "allowedValues": [
+                "Basic",
+                "Standard",
+                "Premium"
+            ],
+            "metadata": {
+                "description": "Specify the pricing tier of the new Azure Redis Cache."
+            }
+        },
+        "redisCacheFamily": {
+            "type": "string",
+            "defaultValue": "C",
+            "allowedValues": [
+                "C",
+                "P"
+            ],
+            "metadata": {
+                "description": "Specify the family for the sku. C = Basic/Standard, P = Premium."
+            }
+        },
+        "redisCacheCapacity": {
+            "type": "int",
+            "defaultValue": 1,
+            "allowedValues": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "metadata": {
+                "description": "Specify the size of the new Azure Redis Cache instance. Valid values: for C (Basic/Standard) family (0, 1, 2, 3, 4, 5, 6), for P (Premium) family (1, 2, 3, 4)"
+            }
+        },
+        "enableNonSslPort": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Specify a boolean value that indicates whether to allow access via non-SSL ports."
+            }
+        },
+        "diagnosticsEnabled": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Specify a boolean value that indicates whether diagnostics should be saved to the specified storage account."
+            }
+        },
         "bacpacUrl": {
             "type": "string",
             "metadata": {
@@ -803,8 +863,8 @@
             "name": "[concat(parameters('keyVaultName'), '/RedisCacheConnectionString')]",
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('RedisCacheConnectionString')]" }
+            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]", "[resourceId('Microsoft.Cache/Redis', parameters('redisCacheName'))]" ], 
+            "properties": { "value": "[listKeys(resourceId('Microsoft.Cache/Redis', parameters('redisCacheName')), '2019-07-01').primaryKey]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -944,6 +1004,45 @@
                     "keySource": "Microsoft.Storage"
                 }
             }
+        },
+        {
+            "type": "Microsoft.Cache/Redis",
+            "apiVersion": "2019-07-01",
+            "name": "[parameters('redisCacheName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "enableNonSslPort": "[parameters('enableNonSslPort')]",
+                "minimumTlsVersion": "1.2",
+                "sku": {
+                    "capacity": "[parameters('redisCacheCapacity')]",
+                    "family": "[parameters('redisCacheFamily')]",
+                    "name": "[parameters('redisCacheSKU')]"
+                }
+            },
+            "resources": [
+                {
+                    "type": "Microsoft.Cache/redis/providers/diagnosticsettings",
+                    "apiVersion": "2017-05-01-preview",
+                    "name": "[concat(parameters('redisCacheName'), '/Microsoft.Insights/', parameters('redisCacheName'))]",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Cache/Redis', parameters('redisCacheName'))]"
+                    ],
+                    "properties": {
+                        "storageAccountId": "[parameters('storageAccountName')]",
+                        "metrics": [
+                            {
+                                "timeGrain": "AllMetrics",
+                                "enabled": "[parameters('diagnosticsEnabled')]",
+                                "retentionPolicy": {
+                                    "days": 90,
+                                    "enabled": "[parameters('diagnosticsEnabled')]"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
 
