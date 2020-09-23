@@ -939,9 +939,9 @@
                         "[variables('sqlserverName')]"
                     ],
                     "sku": {
-                        "name": "Standard",
+                        "name": "S3",
                         "tier": "Standard",
-                        "capacity": 20
+                        "capacity": 200
                     },
                     "properties": {
                         "collation": "SQL_Latin1_General_CP1_CI_AS",
