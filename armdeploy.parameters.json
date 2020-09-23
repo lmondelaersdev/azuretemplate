@@ -157,6 +157,50 @@
         },
         "AdminConsultDBPassword": {
             "value": "tbd"
+        },
+        "backupStorageAccountKey": {
+            "value": ""
+        },
+        "bacpacUrl": {
+            "value": "" 
+        },
+        "storageAccountName": {
+            "value": "sadelo003poc1"
+        },
+        "portalName": {
+            "value": "da-portal-poc"
+        },
+        "apiName": {
+            "value": "da-webapi-poc"
+        },
+        "sqlAdministratorLogin": {
+            "value": ""
+        },
+        "sqlAdministratorLoginPassword": {
+            "value": ""
+        },
+        "enabledForDeployment": {
+            "value": false
+        },
+        "enabledForDiskEncryption": {
+            "value": false
+        },
+        "enabledForTemplateDeployment": {
+            "value": false
+        },
+        "keysPermissions": {
+            "value": [
+                "list"
+            ]
+        },
+        "secretsPermissions": {
+            "value": [
+                "list",
+                "get"
+            ]
+        },
+        "skuName": {
+            "value": "Standard"
         }
     }
 }

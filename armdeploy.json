@@ -9,6 +9,18 @@
                 "description": "description"
             }
         },
+        "backupStorageAccountKey": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the key of the storage account where the BACPAC file is stored."
+            }
+        },
+        "bacpacUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the URL of the BACPAC file."
+            }
+        },
         "portalName": {
             "type": "string",
             "defaultValue": "da-portal-poc",
@@ -57,14 +69,14 @@
         },
         "sqlAdministratorLogin": {
             "type": "string",
-            "defaultValue": "deloadmin",
+            "defaultValue": "",
             "metadata": {
                 "description": "The admin user of the SQL Server"
             }
         },
         "sqlAdministratorLoginPassword": {
             "type": "securestring",
-            "defaultValue": "Terafru5",
+            "defaultValue": "",
             "metadata": {
                 "description": "The password of the admin user of the SQL Server"
             }
@@ -874,8 +886,8 @@
                 "accessTier": "Hot",
                 "networkAcls": {
                     "bypass": "AzureServices",
-                     "dependsOn": [
-                        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]"
                     ],
                     "virtualNetworkRules": [
                         {
@@ -960,7 +972,25 @@
                     ],
                     "properties": {
                         "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]"
-                    }
+                    },
+                    "resources": [
+                        {
+                            "type": "extensions",
+                            "apiVersion": "2014-04-01",
+                            "name": "Import",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), variables('databaseName'))]"
+                            ],
+                            "properties": {
+                                "storageKeyType": "StorageAccessKey",
+                                "storageKey": "[parameters('backupStorageAccountKey')]",
+                                "storageUri": "[parameters('bacpacUrl')]",
+                                "administratorLogin": "[parameters('sqlAdministratorLogin')]",
+                                "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+                                "operationMode": "Import"
+                            }
+                        }
+                    ]
                 }
             ]
         },
