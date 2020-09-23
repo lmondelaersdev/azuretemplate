@@ -1029,7 +1029,7 @@
                         "[resourceId('Microsoft.Cache/Redis', parameters('redisCacheName'))]"
                     ],
                     "properties": {
-                        "storageAccountId": "[parameters('storageAccountName')]",
+                        "storageAccountId":  "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                         "metrics": [
                             {
                                 "timeGrain": "AllMetrics",
