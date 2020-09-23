@@ -926,7 +926,7 @@
                 "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
                 "version": "12.0"
             },
-            "resources": [ 
+            "resources": [  
                 {
                     "name": "[variables('databaseName')]",
                     "type": "databases",
@@ -940,8 +940,8 @@
                     ],
                     "sku": {
                         "name": "Standard",
-                        "tier": "Standard",
-                        "capacity": 20
+                        "tier": "Standard", 
+                        "capacity": 50
                     },
                     "properties": {
                         "collation": "SQL_Latin1_General_CP1_CI_AS",
