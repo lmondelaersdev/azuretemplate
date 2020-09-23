@@ -475,6 +475,11 @@
             "name": "[parameters('keyVaultName')]",
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('apiName'))]",
+                "[resourceId('Microsoft.Web/sites', parameters('portalName'))]",
+                "[resourceId('Microsoft.Web/sites', parameters('centraladminName'))]"
+            ],
             "properties": {
                 "enabledForDeployment": "[parameters('enabledForDeployment')]",
                 "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
