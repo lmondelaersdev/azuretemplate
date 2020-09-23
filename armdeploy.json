@@ -816,7 +816,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('InstrumentationKeyPortal')]" }
+            "properties": { "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsNamePortal')), '2014-04-01').InstrumentationKey]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -840,7 +840,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('InstrumentationKeyWebAPI')]" }
+              "properties": { "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsNameApi')), '2014-04-01').InstrumentationKey]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
