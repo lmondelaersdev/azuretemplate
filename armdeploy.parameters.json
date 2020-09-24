@@ -116,6 +116,9 @@
         "LyantheSOAPPassword": {
             "value": "tbd"
         },
+        "restoreDBBackup": {
+            "value": "no"
+        },
         "RedisCacheConnectionString": {
             "value": "tbd"
         },
