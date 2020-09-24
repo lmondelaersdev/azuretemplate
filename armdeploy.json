@@ -441,7 +441,7 @@
         "appServicePlanSku": "S1",
         "sqlserverName": "delo003-digitalaccountant-poc",
         "databaseName": "centraladmin-poc",
-        "DatabaseConnectionString": "[concat('Server=tcp:',variables('sqlserverName'),'.database.windows.net,,1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
+        "DatabaseConnectionString": "[concat('Server=tcp:',variables('sqlserverName'),'.database.windows.net,1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
         "storageAccountApiVersion": "2018-07-01",
         "storageAccountNameTidy": "[toLower(trim(parameters('storageAccountName')))]"
     },
@@ -478,11 +478,19 @@
                                 {
                                     "service": "Microsoft.Sql",
                                     "locations": [
-                                        "westeurope"
+                                        "westeurope",
+                                        "northeurope"
                                     ]
                                 },
                                 {
                                     "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "westeurope",
+                                        "northeurope"
+                                    ]
+                                },
+                                {
+                                    "service": "Microsoft.Web",
                                     "locations": [
                                         "westeurope",
                                         "northeurope"
