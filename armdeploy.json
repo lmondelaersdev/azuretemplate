@@ -18,10 +18,10 @@
         "redisCacheName": {
             "type": "string",
             "defaultValue": "da-redis-pocbasic",
-            "metadata": { 
+            "metadata": {
                 "description": "Specify the name of the Azure Redis Cache to create."
             }
-        },        
+        },
         "redisCacheSKU": {
             "type": "string",
             "defaultValue": "Basic",
@@ -77,7 +77,7 @@
         },
         "restoreDBBackup": {
             "type": "string",
-            "defaultValue" : "no",
+            "defaultValue": "no",
             "metadata": {
                 "description": "description"
             }
@@ -855,7 +855,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-              "properties": { "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsNameApi')), '2014-04-01').InstrumentationKey]" }
+            "properties": { "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsNameApi')), '2014-04-01').InstrumentationKey]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -878,7 +878,7 @@
             "name": "[concat(parameters('keyVaultName'), '/RedisCacheConnectionString')]",
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]", "[resourceId('Microsoft.Cache/Redis', parameters('redisCacheName'))]" ], 
+            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]", "[resourceId('Microsoft.Cache/Redis', parameters('redisCacheName'))]" ],
             "properties": { "value": "[concat(parameters('redisCacheName'),'.redis.cache.windows.net:6380,password=',listKeys(resourceId('Microsoft.Cache/Redis', parameters('redisCacheName')), '2019-07-01').primaryKey,',ssl=True,sslProtocols=tls12,abortConnect=False,syncTimeout=15000')]" }
         },
         {
@@ -1044,7 +1044,7 @@
                         "[resourceId('Microsoft.Cache/Redis', parameters('redisCacheName'))]"
                     ],
                     "properties": {
-                        "storageAccountId":  "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+                        "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
                         "metrics": [
                             {
                                 "timeGrain": "AllMetrics",
@@ -1094,8 +1094,7 @@
                         "collation": "SQL_Latin1_General_CP1_CI_AS",
                         "maxSizeBytes": "21474836480",
                         "requestedServiceObjectiveName": "Basic"
-                    }
-                      ,
+                    },
                     "resources": [
                         {
                             "condition": "[equals(parameters('restoreDBBackup'),'yes')]",
@@ -1114,7 +1113,7 @@
                                 "operationMode": "Import"
                             }
                         }
-                    ] 
+                    ]
                 },
                 {
                     "type": "firewallrules",
@@ -1182,8 +1181,17 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "WEBSITE_LOAD_CERTIFICATES",
+                            "value": "[parameters('CertificateThumbprintWebApi')]"
+                        }
+                    ]
+                }
             },
+
             "resources": [
                 {
                     "name": "virtualNetwork",
