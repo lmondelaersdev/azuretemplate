@@ -17,8 +17,8 @@
         },
         "redisCacheName": {
             "type": "string",
-            "defaultValue": "da-redis-poc",
-            "metadata": {
+            "defaultValue": "da-redis-pocbasic",
+            "metadata": { 
                 "description": "Specify the name of the Azure Redis Cache to create."
             }
         },        
