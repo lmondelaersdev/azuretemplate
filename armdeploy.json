@@ -24,7 +24,7 @@
         },        
         "redisCacheSKU": {
             "type": "string",
-            "defaultValue": "Standard",
+            "defaultValue": "Basic",
             "allowedValues": [
                 "Basic",
                 "Standard",
