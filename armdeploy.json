@@ -1006,7 +1006,7 @@
                         }
                     ], */
                     "ipRules": [],
-                    "defaultAction": "Deny"
+                    "defaultAction": "Allow"
                 },
                 "encryption": {
                     "services": {
