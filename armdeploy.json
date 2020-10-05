@@ -995,16 +995,16 @@
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]", 
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
                         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
                     ],
-                    "virtualNetworkRules": [
+                   /*  "virtualNetworkRules": [
                         {
                             "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
                             "action": "Allow",
                             "state": "Succeeded"
                         }
-                    ],
+                    ], */
                     "ipRules": [],
                     "defaultAction": "Deny"
                 },
@@ -1035,7 +1035,7 @@
                     "name": "[parameters('redisCacheSKU')]"
                 }
             }
-           /*  ,
+            /*  ,
             "resources": [
                 {
                     "type": "Microsoft.Cache/redis/providers/diagnosticsettings",
