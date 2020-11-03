@@ -17,7 +17,6 @@
         },
         "redisCacheName": {
             "type": "string",
-            "defaultValue": "da-redis-pocbasic",
             "metadata": {
                 "description": "Specify the name of the Azure Redis Cache to create."
             }
@@ -73,6 +72,18 @@
             "defaultValue": false,
             "metadata": {
                 "description": "Specify a boolean value that indicates whether diagnostics should be saved to the specified storage account."
+            }
+        },
+        "sqlserverName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "databaseName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
             }
         },
         "restoreDBBackup": {
@@ -439,9 +450,7 @@
         "appInsightsNamePortal": "[concat(parameters('portalName'), '-app-insights')]",
         "appInsightsNameApi": "[concat(parameters('apiName'), '-app-insights')]",
         "appServicePlanSku": "S1",
-        "sqlserverName": "delo003-digitalaccountant-poc",
-        "databaseName": "centraladmin-poc",
-        "DatabaseConnectionString": "[concat('Server=tcp:',variables('sqlserverName'),'.database.windows.net,1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
+        "DatabaseConnectionString": "[concat('Server=tcp:',parameters('sqlserverName'),'.database.windows.net,1433;Initial Catalog=',parameters('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
         "storageAccountApiVersion": "2018-07-01",
         "storageAccountNameTidy": "[toLower(trim(parameters('storageAccountName')))]"
     },
@@ -1063,7 +1072,7 @@
         },
         {
 
-            "name": "[variables('sqlserverName')]",
+            "name": "[parameters('sqlserverName')]",
             "type": "Microsoft.Sql/servers",
             "location": "[parameters('location')]",
             "tags": {
@@ -1077,7 +1086,7 @@
             },
             "resources": [
                 {
-                    "name": "[variables('databaseName')]",
+                    "name": "[parameters('databaseName')]",
                     "type": "databases",
                     "location": "[parameters('location')]",
                     "tags": {
@@ -1085,7 +1094,7 @@
                     },
                     "apiVersion": "2018-06-01-preview",
                     "dependsOn": [
-                        "[variables('sqlserverName')]"
+                        "[parameters('sqlserverName')]"
                     ],
                     "sku": {
                         "name": "Standard",
@@ -1104,7 +1113,7 @@
                             "apiVersion": "2014-04-01",
                             "name": "Import",
                             "dependsOn": [
-                                "[resourceId('Microsoft.Sql/servers/databases', variables('sqlserverName'), variables('databaseName'))]"
+                                "[resourceId('Microsoft.Sql/servers/databases', parameters('sqlserverName'), parameters('databaseName'))]"
                             ],
                             "properties": {
                                 "storageKeyType": "StorageAccessKey",
@@ -1121,7 +1130,7 @@
                     "type": "firewallrules",
                     "apiVersion": "2018-06-01-preview",
                     "dependsOn": [
-                        "[variables('sqlserverName')]"
+                        "[parameters('sqlserverName')]"
                     ],
                     "location": "[parameters('location')]",
                     "name": "AllowAllWindowsAzureIps",
@@ -1135,7 +1144,7 @@
                     "type": "virtualNetworkRules",
                     "name": "[concat('allow-access-from-', variables('subnetNameApps'))]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
+                        "[resourceId('Microsoft.Sql/servers/', parameters('sqlServerName'))]",
                         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
                     ],
                     "properties": {

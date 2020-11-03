@@ -12,7 +12,7 @@
             "value": "da-portalwebapi-dev"
         },
         "existingKeyVaultId": {
-            "value": "/subscriptions/d6e33d7b-525b-4a9a-8ff8-a40393c7e061/resourceGroups/RG-DELO003-DEVOPS/providers/Microsoft.KeyVault/vaults/dakeyvault-devops"
+            "value": "tbd"
         },
         "existingKeyVaultSecretName": {
             "value": "devappcert"
@@ -204,6 +204,15 @@
         },
         "skuName": {
             "value": "Standard"
+        },
+        "redisCacheName": {
+            "value": "da-redis-poc"
+        },
+        "sqlserverName": {
+            "value": "centraladminmanagement-poc"  
+        },
+        "databaseName": {
+            "value": "centraladmin-poc" 
         }
     }
 }
