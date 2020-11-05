@@ -213,6 +213,9 @@
         },
         "databaseName": {
             "value": "centraladmin-poc" 
+        },
+        "centraladminName": {
+            "value": "da-centraladmin-poc" 
         }
     }
 }
