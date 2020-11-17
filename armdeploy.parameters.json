@@ -216,6 +216,21 @@
         },
         "centraladminName": {
             "value": "da-centraladmin-poc" 
+        },
+        "createVNET": {
+            "value": "yes" 
+        },
+        "vnetName": {
+            "value": "VN-DELO003-QA"  
+        },
+        "subnetNameApps": {
+            "value": "IntegrationSubnet"  
+        },
+        "subnetNameData": {
+            "value": "PrivateLinkSubnet"  
+        },
+        "createRedis": {
+            "value": "yes"  
         }
     }
 }

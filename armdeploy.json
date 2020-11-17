@@ -2,6 +2,30 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "createVNET": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "vnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "subnetNameApps": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "subnetNameData": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
         "storageAccountName": {
             "type": "string",
             "defaultValue": "sadelo003poc1",
@@ -13,6 +37,12 @@
             "type": "string",
             "metadata": {
                 "description": "Specifies the key of the storage account where the BACPAC file is stored."
+            }
+        },
+        "createRedis": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
             }
         },
         "redisCacheName": {
@@ -440,10 +470,9 @@
 
     },
     "variables": {
-        "vnetName": "vnet",
         "vnetAddressPrefix": "10.0.0.0/16",
-        "subnetNameApps": "myappservice",
-        "subnetNameData": "mydataservice",
+        "subnetNameApps": "IntegrationSubnet",
+        "subnetNameData": "PrivateLinkSubnet",
         "subnetAppsAddressPrefix": "10.0.0.0/24",
         "subnetDataAddressPrefix": "10.0.1.0/24",
         "appInsightsNamePortal": "[concat(parameters('portalName'), '-app-insights')]",
@@ -455,9 +484,10 @@
     },
     "resources": [
         {
+            "condition": "[equals(parameters('createVNET'),'yes')]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-11-01",
-            "name": "[variables('vnetName')]",
+            "name": "[parameters('vnetName')]",
             "location": "[parameters('location')]",
             "properties": {
                 "addressSpace": {
@@ -467,7 +497,7 @@
                 },
                 "subnets": [
                     {
-                        "name": "[variables('subnetNameApps')]",
+                        "name": "[parameters('subnetNameApps')]",
                         "properties": {
                             "addressPrefix": "[variables('subnetAppsAddressPrefix')]",
                             "serviceEndpoints": [
@@ -517,7 +547,7 @@
                         }
                     },
                     {
-                        "name": "[variables('subnetNameData')]",
+                        "name": "[parameters('subnetNameData')]",
                         "properties": {
                             "addressPrefix": "[variables('subnetDataAddressPrefix')]",
                             "delegations": [
@@ -1003,12 +1033,12 @@
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
-                        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetName'), parameters('subnetNameApps'))]",
+                        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
                     ],
                    /*  "virtualNetworkRules": [
                         {
-                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetName'), parameters('subnetNameApps'))]",
                             "action": "Allow",
                             "state": "Succeeded"
                         }
@@ -1030,6 +1060,7 @@
             }
         },
         {
+            "condition": "[equals(parameters('createRedis'),'yes')]",
             "type": "Microsoft.Cache/Redis",
             "apiVersion": "2019-07-01",
             "name": "[parameters('redisCacheName')]",
@@ -1141,13 +1172,13 @@
                 {
                     "apiVersion": "2020-02-02-preview",
                     "type": "virtualNetworkRules",
-                    "name": "[concat('allow-access-from-', variables('subnetNameApps'))]",
+                    "name": "[concat('allow-access-from-', parameters('subnetNameApps'))]",
                     "dependsOn": [
                         "[resourceId('Microsoft.Sql/servers/', parameters('sqlServerName'))]",
-                        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
                     ],
                     "properties": {
-                        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]"
+                        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetName'), parameters('subnetNameApps'))]"
                     }
                 }
             ]
@@ -1169,7 +1200,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
             ],
             "properties": {
                 "keyVaultId": "[parameters('existingKeyVaultId')]",
@@ -1185,7 +1216,7 @@
             "kind": "app",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned"
@@ -1211,7 +1242,7 @@
                         "[resourceId('Microsoft.Web/sites', parameters('portalName'))]"
                     ],
                     "properties": {
-                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
+                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetNameApps'))]",
                         "swiftSupported": true
                     }
                 }
@@ -1225,7 +1256,7 @@
             "kind": "app",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned"
@@ -1242,7 +1273,7 @@
                         "[resourceId('Microsoft.Web/sites', parameters('centraladminName'))]"
                     ],
                     "properties": {
-                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
+                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetNameApps'))]",
                         "swiftSupported": true
                     }
                 }
@@ -1256,7 +1287,7 @@
             "kind": "app",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned"
@@ -1268,7 +1299,7 @@
                     "minTlsVersion": "1.2",
                     "ipSecurityRestrictions": [
                         {
-                            "vnetSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('vnetName'), variables('subnetNameApps'))]",
+                            "vnetSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetName'), parameters('subnetNameApps'))]",
                             "action": "Allow",
                             "tag": "Default",
                             "priority": 200,
@@ -1288,7 +1319,7 @@
                         "[resourceId('Microsoft.Web/sites', parameters('apiName'))]"
                     ],
                     "properties": {
-                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetNameApps'))]",
+                        "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetNameApps'))]",
                         "swiftSupported": true
                     }
                 }
