@@ -181,6 +181,18 @@
                 "description": "The location in which all resources should be deployed."
             }
         },
+        "endIpAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "startIpAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
         "sqlAdministratorLogin": {
             "type": "string",
             "defaultValue": "",
@@ -1167,6 +1179,19 @@
                     "properties": {
                         "endIpAddress": "0.0.0.0",
                         "startIpAddress": "0.0.0.0"
+                    }
+                },
+                {
+                    "type": "firewallrules",
+                    "apiVersion": "2018-06-01-preview",
+                    "dependsOn": [
+                        "[parameters('sqlserverName')]"
+                    ],
+                    "location": "[parameters('location')]",
+                    "name": "BE Network",
+                    "properties": {
+                        "endIpAddress": "[parameters('endIpAddress')]",
+                        "startIpAddress": "[parameters('startIpAddress')]"
                     }
                 },
                 {

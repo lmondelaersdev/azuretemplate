@@ -231,6 +231,12 @@
         },
         "createRedis": {
             "value": "yes"  
+        },
+        "endIpAddress": {
+            "value": "" 
+        },
+        "startIpAddress": {
+            "value": ""
         }
     }
 }
