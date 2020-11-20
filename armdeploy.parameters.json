@@ -29,12 +29,6 @@
         "AzureSearchApiKey": {
             "value": "tbd"
         },
-        "AzureStorageConnectionString": {
-            "value": "tbd"
-        },
-        "CentralAdminContext": {
-            "value": "tbd"
-        },
         "CentralAdminContextSwift": {
             "value": "tbd"
         },
@@ -98,16 +92,7 @@
         "InstrumentationKeyLyantheWebJobs": {
             "value": "tbd"
         },
-        "InstrumentationKeyPortal": {
-            "value": "tbd"
-        },
         "InstrumentationKeySilverfinWebJobs": {
-            "value": "tbd"
-        },
-        "InstrumentationKeyWeb": {
-            "value": "tbd"
-        },
-        "InstrumentationKeyWebAPI": {
             "value": "tbd"
         },
         "LyanthePassword": {

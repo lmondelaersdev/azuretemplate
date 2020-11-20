@@ -309,14 +309,6 @@
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         },
-        "AzureStorageConnectionString": {
-            "type": "securestring",
-            "metadata": { "description": "Specifies the value of the secret that you want to create." }
-        },
-        "CentralAdminContext": {
-            "type": "securestring",
-            "metadata": { "description": "Specifies the value of the secret that you want to create." }
-        },
         "CentralAdminContextSwift": {
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
@@ -401,19 +393,11 @@
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         },
-        "InstrumentationKeyPortal": {
-            "type": "securestring",
-            "metadata": { "description": "Specifies the value of the secret that you want to create." }
-        },
         "InstrumentationKeySilverfinWebJobs": {
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         },
         "InstrumentationKeyWeb": {
-            "type": "securestring",
-            "metadata": { "description": "Specifies the value of the secret that you want to create." }
-        },
-        "InstrumentationKeyWebAPI": {
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         },
@@ -483,12 +467,11 @@
     },
     "variables": {
         "vnetAddressPrefix": "10.0.0.0/16",
-        "subnetNameApps": "IntegrationSubnet",
-        "subnetNameData": "PrivateLinkSubnet",
         "subnetAppsAddressPrefix": "10.0.0.0/24",
         "subnetDataAddressPrefix": "10.0.1.0/24",
         "appInsightsNamePortal": "[concat(parameters('portalName'), '-app-insights')]",
         "appInsightsNameApi": "[concat(parameters('apiName'), '-app-insights')]",
+        "appInsightsNameCA": "[concat(parameters('centraladminName'), '-app-insights')]",
         "appServicePlanSku": "S1",
         "DatabaseConnectionString": "[concat('Server=tcp:',parameters('sqlserverName'),'.database.windows.net,1433;Initial Catalog=',parameters('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
         "storageAccountApiVersion": "2018-07-01",
@@ -574,27 +557,7 @@
                     }
                 ]
             }
-        },
-        {
-            "apiVersion": "2020-02-02-preview",
-            "type": "microsoft.insights/components",
-            "name": "[variables('appInsightsNamePortal')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "ApplicationId": "[variables('appInsightsNamePortal')]",
-                "Request_Source": "IbizaWebAppExtensionCreate"
-            }
-        },
-        {
-            "apiVersion": "2020-02-02-preview",
-            "type": "microsoft.insights/components",
-            "name": "[variables('appInsightsNameApi')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "ApplicationId": "[variables('appInsightsNameApi')]",
-                "Request_Source": "IbizaWebAppExtensionCreate"
-            }
-        },
+        },        
         {
             "type": "Microsoft.KeyVault/vaults",
             "name": "[parameters('keyVaultName')]",
@@ -897,7 +860,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('InstrumentationKeyWeb')]" }
+           "properties": { "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsNameCA')), '2014-04-01').InstrumentationKey]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -1207,6 +1170,36 @@
                     }
                 }
             ]
+        },
+        {
+            "apiVersion": "2020-02-02-preview",
+            "type": "microsoft.insights/components",
+            "name": "[variables('appInsightsNamePortal')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ApplicationId": "[variables('appInsightsNamePortal')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
+            "apiVersion": "2020-02-02-preview",
+            "type": "microsoft.insights/components",
+            "name": "[variables('appInsightsNameApi')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ApplicationId": "[variables('appInsightsNameApi')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
+            "apiVersion": "2020-02-02-preview",
+            "type": "microsoft.insights/components",
+            "name": "[variables('appInsightsNameCA')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "ApplicationId": "[variables('appInsightsNameApi')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
         },
         {
             "type": "Microsoft.Web/serverfarms",
