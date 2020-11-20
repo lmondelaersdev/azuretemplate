@@ -309,10 +309,6 @@
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         },
-        "CentralAdminContextSwift": {
-            "type": "securestring",
-            "metadata": { "description": "Specifies the value of the secret that you want to create." }
-        },
         "CentralAdminMasterDataFunctionKey": {
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
@@ -676,7 +672,7 @@
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]" ],
-            "properties": { "value": "[parameters('CentralAdminContextSwift')]" }
+            "properties": { "value": "[variables('DatabaseConnectionString')]" }
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
