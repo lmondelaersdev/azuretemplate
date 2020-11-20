@@ -393,10 +393,6 @@
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
         },
-        "InstrumentationKeyWeb": {
-            "type": "securestring",
-            "metadata": { "description": "Specifies the value of the secret that you want to create." }
-        },
         "LyanthePassword": {
             "type": "securestring",
             "metadata": { "description": "Specifies the value of the secret that you want to create." }
