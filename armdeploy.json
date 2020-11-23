@@ -252,34 +252,6 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/AdminConsultDBPassword')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/AdminConsultPassword')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/AdminConsultUser')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/AuthenticationApiKeyWebAPI')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(variables('keyVaultName'), '/AzureStorageConnectionString')]",
             "apiVersion": "2019-09-01",
             "location": "[variables('location')]",
@@ -321,20 +293,7 @@
             ],
             "properties": { "value": "[reference(resourceId('Microsoft.Web/certificates', variables('certificateName'))).Thumbprint]" }
         },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/CostAllocationApiAuthClientSecret')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/CostAllocationApiClientSecret')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
+
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(variables('keyVaultName'), '/DADatabasePassword')]",
@@ -343,111 +302,7 @@
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ],
             "properties": { "value": "[variables('sqlAdministratorLoginPassword')]" }
         },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/DAStorageAccountKey')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/DASysInterfacesPassword')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/DataLakeSPKey')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/EDreamsToken')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/EOLClientSecret')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ERPServiceBusConnectionString')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ExactOnlineClientSecret')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ExactOnlineServiceBusConnectionString')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/IDAClientSecretPortal')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/IDAClientSecretWeb')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/IDAClientSecretWebApi')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/InstrumentationKeyEmailSummary')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/InstrumentationKeyERPWebJobs')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/InstrumentationKeyExactOnlineWebJobs')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/InstrumentationKeyLyantheWebJobs')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
+
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(variables('keyVaultName'), '/InstrumentationKeyPortal')]",
@@ -479,20 +334,7 @@
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ],
             "properties": { "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsNameApi')), '2014-04-01').InstrumentationKey]" }
         },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/LyanthePassword')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/LyantheSOAPPassword')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
+
         {
             "condition": "[equals(parameters('createRedis'),'yes')]",
             "type": "Microsoft.KeyVault/vaults/secrets",
@@ -502,90 +344,7 @@
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]", "[resourceId('Microsoft.Cache/Redis', parameters('redisCacheName'))]" ],
             "properties": { "value": "[concat(parameters('redisCacheName'),'.redis.cache.windows.net:6380,password=',listKeys(resourceId('Microsoft.Cache/Redis', parameters('redisCacheName')), '2019-07-01').primaryKey,',ssl=True,sslProtocols=tls12,abortConnect=False,syncTimeout=15000')]" }
         },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/RelayKey')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/SendGridAPIKey')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ServiceBusConnectionString')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ServiceBusConnectionStringERP')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ServiceBusConnectionStringExactOnline')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ServiceBusConnectionStringLyanthe')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/ServiceBusConnectionStringSilverfin')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/SilverfinApiKey')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/SilverfinClientSecret')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/SilverfinServiceBusConnectionString')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/SmtpPass')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/TaxAntivirusClientSecret')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
+
         {
             "apiVersion": "2019-06-01",
             "type": "Microsoft.Storage/storageAccounts",
