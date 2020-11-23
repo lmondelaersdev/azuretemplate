@@ -599,13 +599,13 @@
                 "accessTier": "Hot",
                 "networkAcls": {
                     "bypass": "AzureServices",
-                    /*  "virtualNetworkRules": [
+                  "virtualNetworkRules": [
                         {
-                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetName'), parameters('subnetNameApps'))]",
+                            "id": "[parameters('subnetIdApps')]",
                             "action": "Allow",
                             "state": "Succeeded"
                         }
-                    ], */
+                    ], 
                     "ipRules": [],
                     "defaultAction": "Allow"
                 },
