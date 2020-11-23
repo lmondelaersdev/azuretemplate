@@ -607,7 +607,7 @@
                         }
                     ],
                     "ipRules": [],
-                    "defaultAction": "Allow"
+                    "defaultAction": "Deny"
                 },
                 "encryption": {
                     "services": {
