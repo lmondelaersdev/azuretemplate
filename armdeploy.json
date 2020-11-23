@@ -313,13 +313,6 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('keyVaultName'), '/InstrumentationKeySilverfinWebJobs')]",
-            "apiVersion": "2019-09-01",
-            "location": "[variables('location')]",
-            "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(variables('keyVaultName'), '/InstrumentationKeyWeb')]",
             "apiVersion": "2019-09-01",
             "location": "[variables('location')]",
