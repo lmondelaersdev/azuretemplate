@@ -167,7 +167,7 @@
 
     },
     "variables": {
-        "keyVaultName" : "[concat(resourceGroup().name, 'KeyVault')]",
+        "keyVaultName": "[concat(resourceGroup().name, 'KeyVault')]",
         "enabledForDeployment": "true",
         "enabledForDiskEncryption": "true",
         "enabledForTemplateDeployment": "true",
@@ -675,7 +675,8 @@
             "properties": {
                 "administratorLogin": "[variables('sqlAdministratorLogin')]",
                 "administratorLoginPassword": "[variables('sqlAdministratorLoginPassword')]",
-                "version": "12.0"
+                "version": "12.0",
+                "minimalTlsVersion": "1.2"
             },
             "resources": [
                 {
