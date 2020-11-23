@@ -599,13 +599,13 @@
                 "accessTier": "Hot",
                 "networkAcls": {
                     "bypass": "AzureServices",
-                  "virtualNetworkRules": [
+                    "virtualNetworkRules": [
                         {
                             "id": "[parameters('subnetIdApps')]",
                             "action": "Allow",
                             "state": "Succeeded"
                         }
-                    ], 
+                    ],
                     "ipRules": [],
                     "defaultAction": "Allow"
                 },
@@ -676,7 +676,7 @@
                 "administratorLogin": "[variables('sqlAdministratorLogin')]",
                 "administratorLoginPassword": "[variables('sqlAdministratorLoginPassword')]",
                 "version": "12.0",
-                "minimalTlsVersion": "1.2"  
+                "minimalTlsVersion": "1.2"
             },
             "resources": [
                 {
