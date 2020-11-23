@@ -733,32 +733,31 @@
                 //         "startIpAddress": "0.0.0.0"
                 //     }
                 // },
-                {
-                    "type": "firewallrules",
-                    "apiVersion": "2018-06-01-preview",
-                    "dependsOn": [
-                        "[variables('sqlserverName')]"
-                    ],
-                    "location": "[variables('location')]",
-                    "name": "BE Network",
-                    "properties": {
-                        "endIpAddress": "[variables('endIpAddress')]",
-                        "startIpAddress": "[variables('startIpAddress')]"
-                    }
-                }
-                // ,
                 // {
-                //     "apiVersion": "2020-02-02-preview",
-                //     "type": "virtualNetworkRules",
-                //     "name": "allow-access-from-apps",
+                //     "type": "firewallrules",
+                //     "apiVersion": "2018-06-01-preview",
                 //     "dependsOn": [
-                //         "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
-                //         "[parameters('vnetId')]"
+                //         "[variables('sqlserverName')]"
                 //     ],
+                //     "location": "[variables('location')]",
+                //     "name": "BE Network",
                 //     "properties": {
-                //         "virtualNetworkSubnetId": "[parameters('subnetIdApps')]"
+                //         "endIpAddress": "[variables('endIpAddress')]",
+                //         "startIpAddress": "[variables('startIpAddress')]"
                 //     }
                 // }
+                //,
+                {
+                    "apiVersion": "2020-02-02-preview",
+                    "type": "virtualNetworkRules",
+                    "name": "allow-access-from-apps",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+                    ],
+                    "properties": {
+                        "virtualNetworkSubnetId": "[parameters('subnetIdApps')]"
+                    }
+                }
             ]
         },
         {
