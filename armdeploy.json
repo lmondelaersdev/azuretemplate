@@ -599,10 +599,6 @@
                 "accessTier": "Hot",
                 "networkAcls": {
                     "bypass": "AzureServices",
-                    "dependsOn": [
-                        "[parameters('subnetIdApps')]",
-                        "[parameters('vnetId')]"
-                    ],
                     /*  "virtualNetworkRules": [
                         {
                             "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetName'), parameters('subnetNameApps'))]",
@@ -810,8 +806,7 @@
             "apiVersion": "2019-08-01",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]",
-                "[parameters('vnetId')]" 
+                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]"
             ],
             "properties": {
                 "keyVaultId": "[parameters('existingKeyVaultId')]",
@@ -826,8 +821,7 @@
             "location": "[variables('location')]",
             "kind": "app",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]",
-                "[parameters('vnetId')]"
+                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned"
@@ -866,8 +860,7 @@
             "location": "[variables('location')]",
             "kind": "app",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]",
-                "[parameters('vnetId')]"
+                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned"
@@ -897,8 +890,7 @@
             "location": "[variables('location')]",
             "kind": "app",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]",
-                  "[parameters('vnetId')]"
+                "[resourceId('Microsoft.Web/serverFarms', variables('appServicePlanName'))]"
             ],
             "identity": {
                 "type": "SystemAssigned"
