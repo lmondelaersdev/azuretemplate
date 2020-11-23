@@ -494,6 +494,7 @@
             "dependsOn": [ "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]" ]
         },
         {
+            "condition": "[equals(parameters('createRedis'),'yes')]",
             "type": "Microsoft.KeyVault/vaults/secrets",
             "name": "[concat(variables('keyVaultName'), '/RedisCacheConnectionString')]",
             "apiVersion": "2019-09-01",
