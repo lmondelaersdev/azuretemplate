@@ -2,176 +2,23 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "keyVaultName": {
-            "value": "dakeyvault-poc1234567"
-        },
         "objectId": {
-            "value": "6c9a9994-0b10-46cd-a415-cdaa804319c4"
-        },
-        "certificateName": {
-            "value": "da-portalwebapi-dev"
+            "value": "123"
         },
         "existingKeyVaultId": {
-            "value": "tbd"
+            "value": "test"
         },
         "existingKeyVaultSecretName": {
-            "value": "devappcert"
-        },
-        "AdminConsultPassword": {
-            "value": "tbd"
-        },
-        "AdminConsultUser": {
-            "value": "tbd"
-        },
-        "AuthenticationApiKeyWebAPI": {
-            "value": "tbd"
-        },
-        "AzureSearchApiKey": {
-            "value": "tbd"
-        },
-        "CentralAdminMasterDataFunctionKey": {
-            "value": "tbd"
-        },
-        "CertificateThumbprintWebApi": {
-            "value": "tbd"
-        },
-        "CostAllocationApiAuthClientSecret": {
-            "value": "tbd"
-        },
-        "CostAllocationApiClientSecret": {
-            "value": "tbd"
-        },
-        "DADatabasePassword": {
-            "value": "tbd"
-        },
-        "DAStorageAccountKey": {
-            "value": "tbd"
-        },
-        "DASysInterfacesPassword": {
-            "value": "tbd"
-        },
-        "DataLakeSPKey": {
-            "value": "tbd"
-        },
-        "EDreamsToken": {
-            "value": "tbd"
-        },
-        "EOLClientSecret": {
-            "value": "tbd"
-        },
-        "ERPServiceBusConnectionString": {
-            "value": "tbd"
-        },
-        "ExactOnlineClientSecret": {
-            "value": "tbd"
-        },
-        "ExactOnlineServiceBusConnectionString": {
-            "value": "tbd"
-        },
-        "IDAClientSecretPortal": {
-            "value": "tbd"
-        },
-        "IDAClientSecretWeb": {
-            "value": "tbd"
-        },
-        "IDAClientSecretWebApi": {
-            "value": "tbd"
-        },
-        "InstrumentationKeyEmailSummary": {
-            "value": "tbd"
-        },
-        "InstrumentationKeyERPWebJobs": {
-            "value": "tbd"
-        },
-        "InstrumentationKeyExactOnlineWebJobs": {
-            "value": "tbd"
-        },
-        "InstrumentationKeyLyantheWebJobs": {
-            "value": "tbd"
-        },
-        "InstrumentationKeySilverfinWebJobs": {
-            "value": "tbd"
-        },
-        "LyanthePassword": {
-            "value": "tbd"
-        },
-        "LyantheSOAPPassword": {
-            "value": "tbd"
+            "value": "test"
         },
         "restoreDBBackup": {
             "value": "no"
         },
-        "RedisCacheConnectionString": {
-            "value": "tbd"
-        },
-        "RelayKey": {
-            "value": "tbd"
-        },
-        "SendGridAPIKey": {
-            "value": "tbd"
-        },
-        "ServiceBusConnectionString": {
-            "value": "tbd"
-        },
-        "ServiceBusConnectionStringERP": {
-            "value": "tbd"
-        },
-        "ServiceBusConnectionStringExactOnline": {
-            "value": "tbd"
-        },
-        "ServiceBusConnectionStringLyanthe": {
-            "value": "tbd"
-        },
-        "ServiceBusConnectionStringSilverfin": {
-            "value": "tbd"
-        },
-        "SilverfinApiKey": {
-            "value": "tbd"
-        },
-        "SilverfinClientSecret": {
-            "value": "tbd"
-        },
-        "SilverfinServiceBusConnectionString": {
-            "value": "tbd"
-        },
-        "SmtpPass": {
-            "value": "tbd"
-        },
-        "TaxAntivirusClientSecret": {
-            "value": "tbd"
-        },
-        "AdminConsultDBPassword": {
-            "value": "tbd"
-        },
         "backupStorageAccountKey": {
-            "value": ""
+            "value": "test"
         },
         "bacpacUrl": {
-            "value": "" 
-        },
-        "storageAccountName": {
-            "value": "sadelo003poc1"
-        },
-        "portalName": {
-            "value": "da-portal-poc"
-        },
-        "apiName": {
-            "value": "da-webapi-poc"
-        },
-        "sqlAdministratorLogin": {
-            "value": ""
-        },
-        "sqlAdministratorLoginPassword": {
-            "value": ""
-        },
-        "enabledForDeployment": {
-            "value": false
-        },
-        "enabledForDiskEncryption": {
-            "value": false
-        },
-        "enabledForTemplateDeployment": {
-            "value": false
+            "value": "test" 
         },
         "keysPermissions": {
             "value": [
@@ -188,37 +35,25 @@
             "value": "Standard"
         },
         "redisCacheName": {
-            "value": "da-redis-poc"
+            "value": "Test"
         },
-        "sqlserverName": {
-            "value": "centraladminmanagement-poc"  
+        "vnetId": {
+            "value": "test"  
         },
-        "databaseName": {
-            "value": "centraladmin-poc" 
+        "subnetIdApps": {
+            "value": "test"  
         },
-        "centraladminName": {
-            "value": "da-centraladmin-poc" 
-        },
-        "createVNET": {
-            "value": "yes" 
-        },
-        "vnetName": {
-            "value": "VN-DELO003-QA"  
-        },
-        "subnetNameApps": {
-            "value": "IntegrationSubnet"  
-        },
-        "subnetNameData": {
-            "value": "PrivateLinkSubnet"  
+        "subnetIdData": {
+            "value": "test"  
         },
         "createRedis": {
             "value": "yes"  
         },
-        "endIpAddress": {
-            "value": "" 
+        "databaseMaxSizeBytes": {
+            "value": "123" 
         },
-        "startIpAddress": {
-            "value": ""
+        "CentralAdminMasterDataFunctionKey": {
+            "value": "123"  
         }
     }
 }
