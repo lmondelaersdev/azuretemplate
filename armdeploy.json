@@ -473,7 +473,7 @@
                         }
                     ]
                 },
-                 {
+               /*  {
                      "type": "firewallrules",
                      "apiVersion": "2018-06-01-preview",
                      "dependsOn": [
@@ -485,7 +485,7 @@
                          "endIpAddress": "0.0.0.0",
                          "startIpAddress": "0.0.0.0"
                      }
-                 },
+                 },*/
                 // {
                 //     "type": "firewallrules",
                 //     "apiVersion": "2018-06-01-preview",
