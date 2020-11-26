@@ -473,33 +473,32 @@
                         }
                     ]
                 },
-               /*  {
-                     "type": "firewallrules",
-                     "apiVersion": "2018-06-01-preview",
-                     "dependsOn": [
-                         "[variables('sqlserverName')]"
-                     ],
-                     "location": "[variables('location')]",
-                     "name": "AllowAllWindowsAzureIps",
-                     "properties": {
-                         "endIpAddress": "0.0.0.0",
-                         "startIpAddress": "0.0.0.0"
-                     }
-                 },*/
-                // {
-                //     "type": "firewallrules",
-                //     "apiVersion": "2018-06-01-preview",
-                //     "dependsOn": [
-                //         "[variables('sqlserverName')]"
-                //     ],
-                //     "location": "[variables('location')]",
-                //     "name": "BE Network",
-                //     "properties": {
-                //         "endIpAddress": "[variables('endIpAddress')]",
-                //         "startIpAddress": "[variables('startIpAddress')]"
-                //     }
-                // }
-                //,
+                {
+                    "type": "firewallrules",
+                    "apiVersion": "2018-06-01-preview",
+                    "dependsOn": [
+                        "[variables('sqlserverName')]"
+                    ],
+                    "location": "[variables('location')]",
+                    "name": "BE Network",
+                    "properties": {
+                        "endIpAddress": "[variables('endIpAddress')]",
+                        "startIpAddress": "[variables('startIpAddress')]"
+                    }
+                },
+                {
+                    "type": "firewallrules",
+                    "apiVersion": "2018-06-01-preview",
+                    "dependsOn": [
+                        "[variables('sqlserverName')]"
+                    ],
+                    "location": "[variables('location')]",
+                    "name": "AllowAllWindowsAzureIps",
+                    "properties": {
+                        "endIpAddress": "0.0.0.0",
+                        "startIpAddress": "0.0.0.0"
+                    }
+                },
                 {
                     "apiVersion": "2020-02-02-preview",
                     "type": "virtualNetworkRules",
